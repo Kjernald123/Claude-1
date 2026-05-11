@@ -55,6 +55,18 @@
             padding: 30px;
         }
 
+        /* Ny stil för prompt-bubblan */
+        .prompt-bubble {
+            background: #1a1a1a;
+            border-left: 4px solid #a3e635;
+            padding: 40px;
+            border-radius: 0 24px 24px 24px;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
         .nav-button {
             background: rgba(163, 230, 53, 0.1);
             color: #a3e635;
@@ -70,18 +82,19 @@
         }
         .nav-button:disabled { opacity: 0.2; cursor: not-allowed; }
 
+        /* Uppdaterad bildram för att minska suddighet */
         .image-frame {
             border: 1px solid rgba(163, 230, 53, 0.2);
             border-radius: 16px;
-            padding: 10px;
+            padding: 8px;
             background: rgba(0,0,0,0.3);
+            max-width: 80%; /* Gör bilden mindre för att dölja suddighet */
+            margin: 0 auto;
         }
 
         table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
         th { text-align: left; color: #a3e635; padding: 15px; font-weight: 600; }
         td { background: rgba(255,255,255,0.02); padding: 15px; }
-        tr td:first-child { border-radius: 12px 0 0 12px; font-weight: 600; }
-        tr td:last-child { border-radius: 0 12px 12px 0; }
     </style>
 </head>
 <body>
@@ -91,56 +104,15 @@
         const { useState } = React;
 
         const slides = [
-            { 
-                layout: "title",
-                title: "Claude",
-                subtitle: "Framtidens AI-partner för kod & kreativitet",
-                desc: "Hur jag använder världens mest pedagogiska AI-verktyg för att accelerera mitt lärande."
-            },
-            {
-                layout: "grid",
-                title: "Användningsområden",
-                items: [
-                    { icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." },
-                    { icon: "fa-pen-nib", title: "Skrivande", text: "Textbearbetning och kreativt innehåll." },
-                    { icon: "fa-magnifying-glass-chart", title: "Analys", text: "Dokumenthantering och problemlösning." },
-                    { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och koncept." }
-                ]
-            },
-            {
-                layout: "proscons",
-                title: "Fördelar & Nackdelar",
-                pros: ["Snabb & effektiv", "Väldigt pedagogisk", "Perfekt för prototyper", "Bra för nybörjare"],
-                cons: ["Risk för felaktig kod", "Minskad inlärning vid 'copy-paste'", "Kräver kontroll", "Kräver domänkunskap"]
-            },
-            {
-                layout: "pricing",
-                title: "Investeringen",
-                table: [
-                    ["Gratis", "Begränsade tokens", "0€"],
-                    ["Pro", "5x mer kapacitet", "~15€/mån"],
-                    ["Max", "Högsta prestanda", "~90€/mån"]
-                ]
-            },
-            {
-                layout: "image",
-                title: "Case Study 1: Slumpen",
-                desc: "Prompt: Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000.",
-                result: "Resultat: Koden kördes felfritt i Google Colab.",
-                image: "Bilder/slumpmässigt_tal.png"
-            },
-            {
-                layout: "image",
-                title: "Case Study 2: Snake",
-                desc: "Prompt: Skapa ett Snake-spel i Python.",
-                result: "Resultat: Fullt fungerande spel. Krävde 'pygame' och anpassning för Replit.",
-                image: "Bilder/snake_spel.png"
-            },
-            {
-                layout: "outro",
-                title: "Tack!",
-                content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att göra jobbet åt en."
-            }
+            { layout: "title", title: "Claude", subtitle: "Framtidens AI-partner för kod & kreativitet", desc: "Hur jag använder världens mest pedagogiska AI-verktyg för att accelerera mitt lärande." },
+            { layout: "grid", title: "Användningsområden", items: [{ icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." }, { icon: "fa-pen-nib", title: "Skrivande", text: "Textbearbetning och kreativt innehåll." }, { icon: "fa-magnifying-glass-chart", title: "Analys", text: "Dokumenthantering och problemlösning." }, { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och koncept." }] },
+            { layout: "proscons", title: "Fördelar & Nackdelar", pros: ["Snabb & effektiv", "Väldigt pedagogisk", "Perfekt för prototyper", "Bra för nybörjare"], cons: ["Risk för felaktig kod", "Minskad inlärning vid 'copy-paste'", "Kräver kontroll", "Kräver domänkunskap"] },
+            { layout: "pricing", title: "Investeringen", table: [["Gratis", "Begränsade tokens", "0€"], ["Pro", "5x mer kapacitet", "~15€/mån"], ["Max", "Högsta prestanda", "~90€/mån"]] },
+            { layout: "prompt", title: "Prompt 1", prompt: "Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000." },
+            { layout: "image", title: "Resultat: Slumpen", desc: "Koden kördes i Google Colab.", result: "Resultatet visades direkt och var exakt enligt instruktion.", image: "Bilder/slumpmässigt_tal.png" },
+            { layout: "prompt", title: "Prompt 2", prompt: "skapa ett snake spel i python, tack" },
+            { layout: "image", title: "Resultat: Snake", desc: "Logiken för spelet i Python.", result: "Fullt fungerande spel med Pygame-instruktioner.", image: "Bilder/snake_spel.png" },
+            { layout: "outro", title: "Tack!", content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att göra jobbet åt en." }
         ];
 
         function Presentation() {
@@ -170,25 +142,50 @@
                                 </div>
                             )}
 
+                            {s.layout === "prompt" && (
+                                <div className="flex-grow flex flex-col justify-center">
+                                    <div className="text-sm font-bold uppercase opacity-40 mb-6 tracking-[0.3em]">{s.title} // Input</div>
+                                    <div className="prompt-bubble italic font-medium">"{s.prompt}"</div>
+                                </div>
+                            )}
+
                             {s.layout === "grid" && (
                                 <div>
                                     <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
-                                    <div className="grid grid-cols-2 gap-6">
-                                        {s.items.map((item, i) => (
-                                            <div key={i} className="glass-card flex items-start gap-5">
-                                                <div className="w-12 h-12 rounded-lg bg-lime-400/10 flex items-center justify-center flex-shrink-0">
-                                                    <i className={`fa-solid ${item.icon} accent-text text-xl`}></i>
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                                                    <p className="opacity-60">{item.text}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                    <div className="grid grid-cols-2 gap-6">{s.items.map((item, i) => (
+                                        <div key={i} className="glass-card flex items-start gap-5">
+                                            <div className="w-12 h-12 rounded-lg bg-lime-400/10 flex items-center justify-center flex-shrink-0"><i className={`fa-solid ${item.icon} accent-text text-xl`}></i></div>
+                                            <div><h3 className="text-xl font-bold mb-2">{item.title}</h3><p className="opacity-60">{item.text}</p></div>
+                                        </div>
+                                    ))}</div>
+                                </div>
+                            )}
+
+                            {s.layout === "image" && (
+                                <div className="grid grid-cols-2 gap-12 h-full items-center">
+                                    <div>
+                                        <h2 className="text-5xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                        <div className="space-y-6">
+                                            <div className="glass-card"><p className="opacity-60 mb-2 text-sm uppercase tracking-widest font-bold">Process</p><p className="text-lg">{s.desc}</p></div>
+                                            <div className="glass-card border-lime-400/20"><p className="accent-text mb-2 text-sm uppercase tracking-widest font-bold">Status</p><p className="text-lg">{s.result}</p></div>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <div className="image-frame">
+                                            <img src={s.image} alt="Exempel" className="rounded-lg w-full shadow-2xl" style={{imageRendering: 'auto'}} />
+                                        </div>
                                     </div>
                                 </div>
                             )}
 
+                            {s.layout === "outro" && (
+                                <div className="flex-grow flex flex-col justify-center items-center text-center">
+                                    <h2 className="text-7xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <p className="max-w-2xl text-2xl font-light opacity-80 leading-relaxed">{s.content}</p>
+                                </div>
+                            )}
+                            
+                            {/* Standard layouts för de övriga rymdes här också... */}
                             {s.layout === "proscons" && (
                                 <div className="flex-grow flex flex-col justify-center">
                                     <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
@@ -204,64 +201,23 @@
                                     </div>
                                 </div>
                             )}
-
                             {s.layout === "pricing" && (
                                 <div className="flex-grow flex flex-col justify-center">
                                     <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
                                     <table>
-                                        <thead>
-                                            <tr><th>Plan</th><th>Funktioner</th><th>Pris</th></tr>
-                                        </thead>
-                                        <tbody>
-                                            {s.table.map((row, i) => (
-                                                <tr key={i}><td>{row[0]}</td><td>{row[1]}</td><td className="accent-text font-bold">{row[2]}</td></tr>
-                                            ))}
-                                        </tbody>
+                                        <thead><tr><th>Plan</th><th>Funktioner</th><th>Pris</th></tr></thead>
+                                        <tbody>{s.table.map((row, i) => (<tr key={i}><td>{row[0]}</td><td>{row[1]}</td><td className="accent-text font-bold">{row[2]}</td></tr>))}</tbody>
                                     </table>
-                                </div>
-                            )}
-
-                            {s.layout === "image" && (
-                                <div className="grid grid-cols-2 gap-12 h-full items-center">
-                                    <div>
-                                        <h2 className="text-5xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
-                                        <div className="space-y-6">
-                                            <div className="glass-card">
-                                                <p className="opacity-60 mb-2 text-sm uppercase tracking-widest">Prompt</p>
-                                                <p className="text-lg font-medium">{s.desc}</p>
-                                            </div>
-                                            <div className="glass-card border-lime-400/20">
-                                                <p className="accent-text mb-2 text-sm uppercase tracking-widest">Status</p>
-                                                <p className="text-lg">{s.result}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="image-frame">
-                                        <img src={s.image} alt="Kod exempel" className="rounded-lg w-full shadow-2xl" />
-                                    </div>
-                                </div>
-                            )}
-
-                            {s.layout === "outro" && (
-                                <div className="flex-grow flex flex-col justify-center items-center text-center">
-                                    <h2 className="text-7xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
-                                    <p className="max-w-2xl text-2xl font-light opacity-80 leading-relaxed">
-                                        {s.content}
-                                    </p>
                                 </div>
                             )}
                         </div>
 
                         <div className="flex justify-between items-center mt-10">
                             <div className="flex gap-4">
-                                <button onClick={prev} disabled={index === 0} className="nav-button">
-                                    <i className="fa-solid fa-chevron-left"></i>
-                                </button>
-                                <button onClick={next} disabled={index === slides.length - 1} className="nav-button">
-                                    <i className="fa-solid fa-chevron-right"></i>
-                                </button>
+                                <button onClick={prev} disabled={index === 0} className="nav-button"><i className="fa-solid fa-chevron-left"></i></button>
+                                <button onClick={next} disabled={index === slides.length - 1} className="nav-button"><i className="fa-solid fa-chevron-right"></i></button>
                             </div>
-                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.0</div>
+                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.1</div>
                         </div>
                     </div>
                 </div>
