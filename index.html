@@ -3,13 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Presentation</title>
+    <title>Claude AI - Pro Presentation</title>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-        body { background-color: #f3f4f6; }
+        * { font-family: 'Urbanist', sans-serif; }
+        body { 
+            background-color: #050505; 
+            margin: 0; 
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .bg-blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(163, 230, 53, 0.08) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, rgba(20,20,20,1) 0%, rgba(5,5,5,1) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .accent-text { color: #a3e635; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .nav-button {
+            background: rgba(163, 230, 53, 0.1);
+            color: #a3e635;
+            border: 1px solid rgba(163, 230, 53, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .nav-button:hover:not(:disabled) {
+            background: rgba(163, 230, 53, 0.2);
+            transform: translateY(-2px);
+        }
+        .nav-button:disabled { opacity: 0.2; cursor: not-allowed; }
+
+        .image-frame {
+            border: 1px solid rgba(163, 230, 53, 0.2);
+            border-radius: 16px;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        th { text-align: left; color: #a3e635; padding: 15px; font-weight: 600; }
+        td { background: rgba(255,255,255,0.02); padding: 15px; }
+        tr td:first-child { border-radius: 12px 0 0 12px; font-weight: 600; }
+        tr td:last-child { border-radius: 0 12px 12px 0; }
     </style>
 </head>
 <body>
@@ -19,41 +91,179 @@
         const { useState } = React;
 
         const slides = [
-            { title: "Claude (AI-verktyg)", content: "Claude kan användas för text och skrivande, programmering, analys, problemlösning, idéer, kreativitet och dokumenthantering." },
-            { title: "Varför jag använder Claude", content: "Jag har valt att använda Claude främst för att skapa kod snabbt och effektivt." },
-            { title: "Fördelar", content: "Snabb, pedagogisk, bra för nybörjare och prototyper." },
-            { title: "Nackdelar", content: "Kan ge fel kod, minskar inlärning om man bara kopierar, kräver kontroll och förståelse." },
-            { title: "Viktigt att veta", content: "Claude ger ofta färdig kod utan förklaring. Du får koden och instruktioner för hur du använder den." },
-            { title: "Priser", content: "Gratisversion med begränsade tokens. Pro: ca 15€/månad. Max: ca 90€/månad." },
-            { title: "Prompt 1", content: "Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000." },
-            { title: "Resultat (Prompt 1)", content: "Funkade bra när koden kördes i Google Colab.", image: "Bilder/slumpmässigt_tal.png" },
-            { title: "Prompt 2", content: "Skapa ett Snake-spel i Python.", content: "Koden fungerade, men krävde pygame. När jag körde i Replit behövdes viss anpassning.", image: "Bilder/snake_spel.png" }
+            { 
+                layout: "title",
+                title: "Claude",
+                subtitle: "Framtidens AI-partner för kod & kreativitet",
+                desc: "Hur jag använder världens mest pedagogiska AI-verktyg för att accelerera mitt lärande."
+            },
+            {
+                layout: "grid",
+                title: "Användningsområden",
+                items: [
+                    { icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." },
+                    { icon: "fa-pen-nib", title: "Skrivande", text: "Textbearbetning och kreativt innehåll." },
+                    { icon: "fa-magnifying-glass-chart", title: "Analys", text: "Dokumenthantering och problemlösning." },
+                    { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och koncept." }
+                ]
+            },
+            {
+                layout: "proscons",
+                title: "Fördelar & Nackdelar",
+                pros: ["Snabb & effektiv", "Väldigt pedagogisk", "Perfekt för prototyper", "Bra för nybörjare"],
+                cons: ["Risk för felaktig kod", "Minskad inlärning vid 'copy-paste'", "Kräver kontroll", "Kräver domänkunskap"]
+            },
+            {
+                layout: "pricing",
+                title: "Investeringen",
+                table: [
+                    ["Gratis", "Begränsade tokens", "0€"],
+                    ["Pro", "5x mer kapacitet", "~15€/mån"],
+                    ["Max", "Högsta prestanda", "~90€/mån"]
+                ]
+            },
+            {
+                layout: "image",
+                title: "Case Study 1: Slumpen",
+                desc: "Prompt: Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000.",
+                result: "Resultat: Koden kördes felfritt i Google Colab.",
+                image: "Bilder/slumpmässigt_tal.png"
+            },
+            {
+                layout: "image",
+                title: "Case Study 2: Snake",
+                desc: "Prompt: Skapa ett Snake-spel i Python.",
+                result: "Resultat: Fullt fungerande spel. Krävde 'pygame' och anpassning för Replit.",
+                image: "Bilder/snake_spel.png"
+            },
+            {
+                layout: "outro",
+                title: "Tack!",
+                content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att göra jobbet åt en."
+            }
         ];
 
         function Presentation() {
             const [index, setIndex] = useState(0);
-            const slide = slides[index];
+            const s = slides[index];
+
+            const next = () => setIndex(i => Math.min(i + 1, slides.length - 1));
+            const prev = () => setIndex(i => Math.max(i - 1, 0));
 
             return (
-                <div className="min-h-screen flex flex-col items-center justify-center p-6">
-                    <div className="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8 transition-all">
-                        <h1 className="text-2xl font-bold mb-4">{slide.title}</h1>
-                        <p className="text-base whitespace-pre-line mb-4">{slide.content}</p>
-                        {slide.image && (
-                            <img src={slide.image} alt={slide.title} className="rounded-xl shadow-md w-full object-contain max-h-96" />
-                        )}
+                <div className="min-h-screen flex items-center justify-center p-10 bg-[#050505]">
+                    <div className="bg-blob" style={{top: '10%', left: '10%'}}></div>
+                    <div className="bg-blob" style={{bottom: '10%', right: '10%', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%)'}}></div>
+                    
+                    <div className="slide-container shadow-2xl">
+                        <div className="flex justify-between items-center mb-10">
+                            <div className="text-sm font-bold tracking-widest opacity-40 uppercase">AI Tool Showcase // 2024</div>
+                            <div className="text-sm font-mono opacity-40">Slide {index + 1} / {slides.length}</div>
+                        </div>
+
+                        <div className="flex-grow flex flex-col">
+                            {s.layout === "title" && (
+                                <div className="flex-grow flex flex-col justify-center items-center text-center">
+                                    <h1 className="text-9xl font-extrabold mb-4 tracking-tighter italic uppercase">{s.title}<span className="accent-text">.</span></h1>
+                                    <h2 className="text-4xl font-light mb-8 opacity-80">{s.subtitle}</h2>
+                                    <p className="max-w-xl text-xl opacity-60 leading-relaxed">{s.desc}</p>
+                                </div>
+                            )}
+
+                            {s.layout === "grid" && (
+                                <div>
+                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <div className="grid grid-cols-2 gap-6">
+                                        {s.items.map((item, i) => (
+                                            <div key={i} className="glass-card flex items-start gap-5">
+                                                <div className="w-12 h-12 rounded-lg bg-lime-400/10 flex items-center justify-center flex-shrink-0">
+                                                    <i className={`fa-solid ${item.icon} accent-text text-xl`}></i>
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                                                    <p className="opacity-60">{item.text}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {s.layout === "proscons" && (
+                                <div className="flex-grow flex flex-col justify-center">
+                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <div className="grid grid-cols-2 gap-8">
+                                        <div className="space-y-4">
+                                            <div className="text-sm font-bold uppercase opacity-40 mb-4">Fördelar</div>
+                                            {s.pros.map((p, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-plus text-xs accent-text"></i> {p}</div>)}
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="text-sm font-bold uppercase opacity-40 mb-4">Nackdelar</div>
+                                            {s.cons.map((c, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-minus text-xs text-red-500"></i> {c}</div>)}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {s.layout === "pricing" && (
+                                <div className="flex-grow flex flex-col justify-center">
+                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <table>
+                                        <thead>
+                                            <tr><th>Plan</th><th>Funktioner</th><th>Pris</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            {s.table.map((row, i) => (
+                                                <tr key={i}><td>{row[0]}</td><td>{row[1]}</td><td className="accent-text font-bold">{row[2]}</td></tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+
+                            {s.layout === "image" && (
+                                <div className="grid grid-cols-2 gap-12 h-full items-center">
+                                    <div>
+                                        <h2 className="text-5xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                        <div className="space-y-6">
+                                            <div className="glass-card">
+                                                <p className="opacity-60 mb-2 text-sm uppercase tracking-widest">Prompt</p>
+                                                <p className="text-lg font-medium">{s.desc}</p>
+                                            </div>
+                                            <div className="glass-card border-lime-400/20">
+                                                <p className="accent-text mb-2 text-sm uppercase tracking-widest">Status</p>
+                                                <p className="text-lg">{s.result}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="image-frame">
+                                        <img src={s.image} alt="Kod exempel" className="rounded-lg w-full shadow-2xl" />
+                                    </div>
+                                </div>
+                            )}
+
+                            {s.layout === "outro" && (
+                                <div className="flex-grow flex flex-col justify-center items-center text-center">
+                                    <h2 className="text-7xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <p className="max-w-2xl text-2xl font-light opacity-80 leading-relaxed">
+                                        {s.content}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="flex justify-between items-center mt-10">
+                            <div className="flex gap-4">
+                                <button onClick={prev} disabled={index === 0} className="nav-button">
+                                    <i className="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <button onClick={next} disabled={index === slides.length - 1} className="nav-button">
+                                    <i className="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.0</div>
+                        </div>
                     </div>
-                    <div className="flex gap-4 mt-6">
-                        <button 
-                            className={`px-4 py-2 rounded bg-blue-500 text-white ${index === 0 ? 'opacity-50' : ''}`}
-                            onClick={() => setIndex(Math.max(index - 1, 0))}
-                            disabled={index === 0}>Bakåt</button>
-                        <button 
-                            className={`px-4 py-2 rounded bg-blue-500 text-white ${index === slides.length - 1 ? 'opacity-50' : ''}`}
-                            onClick={() => setIndex(Math.min(index + 1, slides.length - 1))}
-                            disabled={index === slides.length - 1}>Nästa</button>
-                    </div>
-                    <p className="mt-4 text-sm text-gray-500">Slide {index + 1} / {slides.length}</p>
                 </div>
             );
         }
