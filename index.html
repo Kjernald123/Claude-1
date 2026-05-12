@@ -58,9 +58,9 @@
         .prompt-bubble {
             background: #1a1a1a;
             border-left: 4px solid #a3e635;
-            padding: 35px;
+            padding: 30px;
             border-radius: 0 24px 24px 24px;
-            font-size: 2.2rem;
+            font-size: 2rem;
             line-height: 1.2;
             font-weight: 600;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -86,7 +86,7 @@
             border-radius: 16px;
             padding: 8px;
             background: rgba(0,0,0,0.3);
-            max-width: 80%;
+            max-width: 90%;
             margin: 0 auto;
         }
 
@@ -102,16 +102,23 @@
         const { useState } = React;
 
         const slides = [
-            { layout: "title", title: "Claude", subtitle: "Från Idé till Interaktiv Kod", desc: "Hur jag använder AI för att accelerera mitt lärande och bygga egna projekt." },
-            { layout: "grid", title: "Användningsområden", items: [{ icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." }, { icon: "fa-pen-nib", title: "Skrivande", text: "Textbearbetning och kreativt innehåll." }, { icon: "fa-magnifying-glass-chart", title: "Analys", text: "Dokumenthantering och problemlösning." }, { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och koncept." }] },
-            { layout: "proscons", title: "Fördelar & Nackdelar", pros: ["Snabb & effektiv", "Väldigt pedagogisk", "Perfekt för prototyper", "Bra för nybörjare"], cons: ["Risk för felaktig kod", "Minskad inlärning vid 'copy-paste'", "Kräver kontroll", "Kräver domänkunskap"] },
+            { layout: "title", title: "Claude AI", subtitle: "Från Idé till Interaktiv Kod", desc: "Utvärdering och presentation av Claude som ett verktyg för programmering och lärande." },
+            { layout: "grid", title: "Nytta & Syfte", items: [{ icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." }, { icon: "fa-rocket", title: "Prototyping", text: "Perfekt för att snabbt testa idéer och spelmekanik." }, { icon: "fa-graduation-cap", title: "Pedagogik", text: "Claude förklarar stegen istället för att bara ge svar." }, { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och logiska problem." }] },
             { layout: "prompt", title: "Prompt 1", prompt: "Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000." },
-            { layout: "image", title: "Resultat: Slumpen", desc: "Koden kördes i Google Colab.", result: "Resultatet visades direkt och var exakt enligt instruktion.", image: "Bilder/slumpmässigt_tal.png" },
+            { layout: "image", title: "Resultat: Slumpen", desc: "Koden kördes i Google Colab.", result: "Enkel och ren kod som fungerade direkt utan några justeringar.", image: "Bilder/slumpmässigt_tal.png" },
             { layout: "prompt", title: "Prompt 2", prompt: "skapa ett snake spel i python, tack" },
-            { layout: "image", title: "Resultat: Snake", desc: "Logiken för spelet i Python.", result: "Fullt fungerande spel med Pygame-instruktioner som skapades på några sekunder.", image: "Bilder/snake_spel.png" },
+            { layout: "image", title: "Resultat: Snake", desc: "Logiken för spelet i Python/Pygame.", result: "Fullt fungerande spel med poängräkning och kollisionslogik skapat på nolltid.", image: "Bilder/snake_spel.png" },
             { layout: "prompt", title: "Prompt 3", prompt: "skapa en python kod för ett skjut spel" },
-            { layout: "image", title: "Resultat: Skjutspel", desc: "Anpassning för webben via Replit.", result: "Det blev riktigt bra! Eftersom Claude inte kan köra kod själv använde jag Replit som gjorde om koden lite för att den skulle fungera på webben, men med bibehållet utseende.", image: "Bilder/skjut_spel.png" },
-            { layout: "outro", title: "Tack!", content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att låta den göra jobbet åt en." }
+            { layout: "image", title: "Resultat: Skjutspel", desc: "Anpassning för webben via Replit.", result: "Claude skapade grunden. För att kunna köra grafiken på webben användes Replit som anpassade koden smidigt.", image: "Bilder/skjut_spel.png" },
+            { 
+                layout: "comparison", 
+                title: "Analys: Claude vs ChatGPT", 
+                text: "Jag körde samma prompt i ChatGPT för att se om den kunde göra det bättre.", 
+                analysis: "Resultatet blev att koden från ChatGPT var mycket mer simpel. Designen i helhet var inte alls lika inbjudande som den jag fick av Claude.",
+                image: "Bilder/chatgpt_resultat.png"
+            },
+            { layout: "proscons", title: "Slutlig Utvärdering", pros: ["Pedagogisk och tydlig", "Stark känsla för designval", "Snabb vid iterationer", "Bra på problemlösning"], cons: ["Kräver externa miljöer (Replit)", "Risk för 'copy-paste' lärande", "Begränsade gratistokens", "Kan ej köra grafisk kod själv"] },
+            { layout: "outro", title: "Tack!", content: "Projektet finns tillgängligt på GitHub. Claude visade sig vara ett utmärkt verktyg för att accelerera utvecklingsprocessen." }
         ];
 
         function Presentation() {
@@ -128,7 +135,7 @@
                     
                     <div className="slide-container shadow-2xl">
                         <div className="flex justify-between items-center mb-10">
-                            <div className="text-sm font-bold tracking-widest opacity-40 uppercase">AI Showcase // 2024</div>
+                            <div className="text-sm font-bold tracking-widest opacity-40 uppercase">AI Tool Analysis // VT26</div>
                             <div className="text-sm font-mono opacity-40">Slide {index + 1} / {slides.length}</div>
                         </div>
 
@@ -145,10 +152,6 @@
                                 <div className="flex-grow flex flex-col justify-center">
                                     <div className="text-sm font-bold uppercase opacity-40 mb-6 tracking-[0.3em]">{s.title} // Input</div>
                                     <div className="prompt-bubble italic font-medium">"{s.prompt}"</div>
-                                    <div className="mt-8 flex items-center gap-3 opacity-30">
-                                        <i className="fa-solid fa-paper-plane"></i>
-                                        <span className="text-sm font-bold uppercase">Skickas till Claude AI...</span>
-                                    </div>
                                 </div>
                             )}
 
@@ -181,36 +184,57 @@
                                 </div>
                             )}
 
+                            {s.layout === "comparison" && (
+                                <div className="grid grid-cols-2 gap-12 h-full items-center">
+                                    <div>
+                                        <h2 className="text-5xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                        <div className="glass-card border-l-4 border-l-lime-400 mb-6">
+                                            <p className="opacity-80 text-lg leading-relaxed">{s.text}</p>
+                                        </div>
+                                        <div className="glass-card bg-red-400/5 border-l-4 border-l-red-400">
+                                            <p className="accent-text mb-2 text-sm uppercase tracking-widest font-bold">Slutsats</p>
+                                            <p className="text-xl font-semibold leading-relaxed">{s.analysis}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center">
+                                        <p className="text-xs uppercase tracking-widest mb-4 opacity-40">Skärmklipp: ChatGPT Resultat</p>
+                                        <div className="image-frame opacity-80 hover:opacity-100 transition-opacity">
+                                            <img src={s.image} alt="ChatGPT" className="rounded-lg w-full shadow-2xl" />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {s.layout === "proscons" && (
+                                <div className="flex-grow flex flex-col justify-center">
+                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
+                                    <div className="grid grid-cols-2 gap-8">
+                                        <div className="space-y-4">
+                                            <div className="text-sm font-bold uppercase opacity-40 mb-4 tracking-widest">Fördelar</div>
+                                            {s.pros.map((p, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-plus text-xs accent-text"></i> {p}</div>)}
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="text-sm font-bold uppercase opacity-40 mb-4 tracking-widest">Nackdelar / Begränsningar</div>
+                                            {s.cons.map((c, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-minus text-xs text-red-500"></i> {c}</div>)}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {s.layout === "outro" && (
                                 <div className="flex-grow flex flex-col justify-center items-center text-center">
                                     <h2 className="text-7xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
                                     <p className="max-w-2xl text-2xl font-light opacity-80 leading-relaxed">{s.content}</p>
                                 </div>
                             )}
-                            
-                            {s.layout === "proscons" && (
-                                <div className="flex-grow flex flex-col justify-center">
-                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
-                                    <div className="grid grid-cols-2 gap-8">
-                                        <div className="space-y-4">
-                                            <div className="text-sm font-bold uppercase opacity-40 mb-4">Fördelar</div>
-                                            {s.pros.map((p, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-plus text-xs accent-text"></i> {p}</div>)}
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="text-sm font-bold uppercase opacity-40 mb-4">Nackdelar</div>
-                                            {s.cons.map((c, i) => <div key={i} className="flex items-center gap-3"><i className="fa-solid fa-minus text-xs text-red-500"></i> {c}</div>)}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
 
                         <div className="flex justify-between items-center mt-10">
                             <div className="flex gap-4">
-                                <button onClick={prev} disabled={index === 0} className="nav-button"><i className="fa-solid fa-chevron-left"></i></button>
-                                <button onClick={next} disabled={index === slides.length - 1} className="nav-button"><i className="fa-solid fa-chevron-right"></i></button>
+                                <button onClick={prev} disabled={index === 0} className="nav-button"><i className="fa-solid fa-chevron-left"></i> Bakåt</button>
+                                <button onClick={next} disabled={index === slides.length - 1} className="nav-button">Nästa <i className="fa-solid fa-chevron-right"></i></button>
                             </div>
-                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.3</div>
+                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.5</div>
                         </div>
                     </div>
                 </div>
