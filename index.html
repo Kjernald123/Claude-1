@@ -55,13 +55,12 @@
             padding: 30px;
         }
 
-        /* Ny stil för prompt-bubblan */
         .prompt-bubble {
             background: #1a1a1a;
             border-left: 4px solid #a3e635;
-            padding: 40px;
+            padding: 35px;
             border-radius: 0 24px 24px 24px;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             line-height: 1.2;
             font-weight: 600;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -82,13 +81,12 @@
         }
         .nav-button:disabled { opacity: 0.2; cursor: not-allowed; }
 
-        /* Uppdaterad bildram för att minska suddighet */
         .image-frame {
             border: 1px solid rgba(163, 230, 53, 0.2);
             border-radius: 16px;
             padding: 8px;
             background: rgba(0,0,0,0.3);
-            max-width: 80%; /* Gör bilden mindre för att dölja suddighet */
+            max-width: 80%;
             margin: 0 auto;
         }
 
@@ -104,15 +102,16 @@
         const { useState } = React;
 
         const slides = [
-            { layout: "title", title: "Claude", subtitle: "Framtidens AI-partner för kod & kreativitet", desc: "Hur jag använder världens mest pedagogiska AI-verktyg för att accelerera mitt lärande." },
+            { layout: "title", title: "Claude", subtitle: "Från Idé till Interaktiv Kod", desc: "Hur jag använder AI för att accelerera mitt lärande och bygga egna projekt." },
             { layout: "grid", title: "Användningsområden", items: [{ icon: "fa-code", title: "Kod & Webb", text: "Skapa komplexa script och appar på sekunder." }, { icon: "fa-pen-nib", title: "Skrivande", text: "Textbearbetning och kreativt innehåll." }, { icon: "fa-magnifying-glass-chart", title: "Analys", text: "Dokumenthantering och problemlösning." }, { icon: "fa-lightbulb", title: "Idéer", text: "Brainstorming för projekt och koncept." }] },
             { layout: "proscons", title: "Fördelar & Nackdelar", pros: ["Snabb & effektiv", "Väldigt pedagogisk", "Perfekt för prototyper", "Bra för nybörjare"], cons: ["Risk för felaktig kod", "Minskad inlärning vid 'copy-paste'", "Kräver kontroll", "Kräver domänkunskap"] },
-            { layout: "pricing", title: "Investeringen", table: [["Gratis", "Begränsade tokens", "0€"], ["Pro", "5x mer kapacitet", "~15€/mån"], ["Max", "Högsta prestanda", "~90€/mån"]] },
             { layout: "prompt", title: "Prompt 1", prompt: "Skapa en Python-kod som genererar ett slumpmässigt nummer mellan 1–3000." },
             { layout: "image", title: "Resultat: Slumpen", desc: "Koden kördes i Google Colab.", result: "Resultatet visades direkt och var exakt enligt instruktion.", image: "Bilder/slumpmässigt_tal.png" },
             { layout: "prompt", title: "Prompt 2", prompt: "skapa ett snake spel i python, tack" },
-            { layout: "image", title: "Resultat: Snake", desc: "Logiken för spelet i Python.", result: "Fullt fungerande spel med Pygame-instruktioner.", image: "Bilder/snake_spel.png" },
-            { layout: "outro", title: "Tack!", content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att göra jobbet åt en." }
+            { layout: "image", title: "Resultat: Snake", desc: "Logiken för spelet i Python.", result: "Fullt fungerande spel med Pygame-instruktioner som skapades på några sekunder.", image: "Bilder/snake_spel.png" },
+            { layout: "prompt", title: "Prompt 3", prompt: "skapa en python kod för ett skjut spel" },
+            { layout: "image", title: "Resultat: Skjutspel", desc: "Anpassning för webben via Replit.", result: "Det blev riktigt bra! Eftersom Claude inte kan köra kod själv använde jag Replit som gjorde om koden lite för att den skulle fungera på webben, men med bibehållet utseende.", image: "Bilder/skjut_spel.png" },
+            { layout: "outro", title: "Tack!", content: "Claude är ett kraftfullt verktyg i verktygslådan. Nyckeln till framgång är att använda det för att lära sig mer – inte bara för att låta den göra jobbet åt en." }
         ];
 
         function Presentation() {
@@ -129,7 +128,7 @@
                     
                     <div className="slide-container shadow-2xl">
                         <div className="flex justify-between items-center mb-10">
-                            <div className="text-sm font-bold tracking-widest opacity-40 uppercase">AI Tool Showcase // 2024</div>
+                            <div className="text-sm font-bold tracking-widest opacity-40 uppercase">AI Showcase // 2024</div>
                             <div className="text-sm font-mono opacity-40">Slide {index + 1} / {slides.length}</div>
                         </div>
 
@@ -146,6 +145,10 @@
                                 <div className="flex-grow flex flex-col justify-center">
                                     <div className="text-sm font-bold uppercase opacity-40 mb-6 tracking-[0.3em]">{s.title} // Input</div>
                                     <div className="prompt-bubble italic font-medium">"{s.prompt}"</div>
+                                    <div className="mt-8 flex items-center gap-3 opacity-30">
+                                        <i className="fa-solid fa-paper-plane"></i>
+                                        <span className="text-sm font-bold uppercase">Skickas till Claude AI...</span>
+                                    </div>
                                 </div>
                             )}
 
@@ -167,12 +170,12 @@
                                         <h2 className="text-5xl font-bold mb-8 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
                                         <div className="space-y-6">
                                             <div className="glass-card"><p className="opacity-60 mb-2 text-sm uppercase tracking-widest font-bold">Process</p><p className="text-lg">{s.desc}</p></div>
-                                            <div className="glass-card border-lime-400/20"><p className="accent-text mb-2 text-sm uppercase tracking-widest font-bold">Status</p><p className="text-lg">{s.result}</p></div>
+                                            <div className="glass-card border-lime-400/20"><p className="accent-text mb-2 text-sm uppercase tracking-widest font-bold">Utfall</p><p className="text-lg">{s.result}</p></div>
                                         </div>
                                     </div>
                                     <div className="flex justify-center">
                                         <div className="image-frame">
-                                            <img src={s.image} alt="Exempel" className="rounded-lg w-full shadow-2xl" style={{imageRendering: 'auto'}} />
+                                            <img src={s.image} alt="Exempel" className="rounded-lg w-full shadow-2xl" />
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +188,6 @@
                                 </div>
                             )}
                             
-                            {/* Standard layouts för de övriga rymdes här också... */}
                             {s.layout === "proscons" && (
                                 <div className="flex-grow flex flex-col justify-center">
                                     <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
@@ -201,15 +203,6 @@
                                     </div>
                                 </div>
                             )}
-                            {s.layout === "pricing" && (
-                                <div className="flex-grow flex flex-col justify-center">
-                                    <h2 className="text-5xl font-bold mb-12 italic uppercase tracking-tighter">{s.title}<span className="accent-text">.</span></h2>
-                                    <table>
-                                        <thead><tr><th>Plan</th><th>Funktioner</th><th>Pris</th></tr></thead>
-                                        <tbody>{s.table.map((row, i) => (<tr key={i}><td>{row[0]}</td><td>{row[1]}</td><td className="accent-text font-bold">{row[2]}</td></tr>))}</tbody>
-                                    </table>
-                                </div>
-                            )}
                         </div>
 
                         <div className="flex justify-between items-center mt-10">
@@ -217,7 +210,7 @@
                                 <button onClick={prev} disabled={index === 0} className="nav-button"><i className="fa-solid fa-chevron-left"></i></button>
                                 <button onClick={next} disabled={index === slides.length - 1} className="nav-button"><i className="fa-solid fa-chevron-right"></i></button>
                             </div>
-                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.1</div>
+                            <div className="opacity-20 text-xs tracking-[0.3em] font-bold uppercase">Claude AI Ecosystem // v.1.3</div>
                         </div>
                     </div>
                 </div>
